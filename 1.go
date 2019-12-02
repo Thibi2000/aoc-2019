@@ -7,7 +7,7 @@ import (
     "strconv"
 )
 
-func do_each_line(filename string, start_val int,  action func(line string)int ) int {
+func DoEachLine(filename string, start_val int,  action func(line string)int ) int {
     file, err := os.Open(filename)
     if err != nil {
         fmt.Println("Can't open file")
@@ -27,15 +27,15 @@ func do_each_line(filename string, start_val int,  action func(line string)int )
     return res
 }
 
-func main() {
-    part1 := do_each_line("inputs/1.txt", 0, func(line string) int {
+func First() {
+    part1 := DoEachLine("inputs/1.txt", 0, func(line string) int {
         mass, err := strconv.Atoi(line)
         if err != nil {
             fmt.Println("Couldn't convert text to int")
         }
         return mass / 3 - 2
     })
-    part2 := do_each_line("inputs/1.txt", 0, func(line string) int {
+    part2 := DoEachLine("inputs/1.txt", 0, func(line string) int {
         mass, err := strconv.Atoi(line)
         if err != nil {
             fmt.Println("Couldn't convert text to int")
@@ -49,3 +49,4 @@ func main() {
     fmt.Printf("Part1: %d\n", part1)
     fmt.Printf("Part2: %d\n", part2)
 }
+
