@@ -27,7 +27,7 @@ func DoEachLine(filename string, start_val int,  action func(line string)int ) i
     return res
 }
 
-func First() {
+func main() {
     part1 := DoEachLine("inputs/1.txt", 0, func(line string) int {
         mass, err := strconv.Atoi(line)
         if err != nil {
@@ -49,4 +49,3 @@ func First() {
     fmt.Printf("Part1: %d\n", part1)
     fmt.Printf("Part2: %d\n", part2)
 }
-

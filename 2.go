@@ -9,7 +9,6 @@ import (
 )
 
 type Instruction func(int, int)(int)
-
 var instructions = [2]Instruction{
     func(a int, b int)(int) { return a + b},
     func(a int, b int)(int) { return a * b},
@@ -50,7 +49,7 @@ func Part2(memory []int, size int) (int,int) {
     return 0, 0
 }
 
-func Second() {
+func main() {
     file, _ := os.Open("inputs/2.txt") // no error checking, assume it's there
     defer file.Close()
     scanner := bufio.NewScanner(file)
