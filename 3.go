@@ -159,14 +159,11 @@ func StepsToPoints(lines *Lines, points [][2]int) []int{
 			}
 		}
 		if point_index == -1 {
-            inc := ManhattanDistance(lines.x[i], lines.y[i], lines.x[i+1], lines.y[i+1])
-			step += inc
+			step += ManhattanDistance(lines.x[i], lines.y[i], lines.x[i+1], lines.y[i+1])
 		} else {
-            inc :=ManhattanDistance(lines.x[i], lines.y[i], points[point_index][0], points[point_index][1])
-			step +=  inc
+			step +=  ManhattanDistance(lines.x[i], lines.y[i], points[point_index][0], points[point_index][1])
             steps[point_index] = step
-            inc =  ManhattanDistance(points[point_index][0], points[point_index][1], lines.x[i+1], lines.y[i+1]) 
-            step += inc
+            step +=  ManhattanDistance(points[point_index][0], points[point_index][1], lines.x[i+1], lines.y[i+1]) 
 		}
 	}
     return steps
