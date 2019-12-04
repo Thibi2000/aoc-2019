@@ -1,4 +1,5 @@
 package main
+
 // This seems messy and i had to work too long for this
 // I'm nto that happy with the result
 import (
@@ -130,7 +131,7 @@ func GetPoints(strings [2]string) [][2]int {
 }
 
 func part1(strings [2]string) {
-    fmt.Println("PART1: ")
+	fmt.Println("PART1: ")
 	points := GetPoints(strings)
 	min_distance := ManhattanDistance(0, 0, points[0][0], points[0][1])
 	min_index := 0
@@ -145,59 +146,59 @@ func part1(strings [2]string) {
 	fmt.Printf("The point is %v with distance %d\n\n", points[min_index], min_distance)
 }
 
-func StepsToPoints(lines *Lines, points [][2]int) []int{
+func StepsToPoints(lines *Lines, points [][2]int) []int {
 	steps := make([]int, len(points), len(points))
-    step := 0
+	step := 0
 	for i := 0; i < len(lines.x)-1; i++ {
 		//isVert := IsVertical(lines.x[i], lines.x[i+1])
 		point_index := -1
-        for index, p := range points {
-            if Inbetween(p[1], lines.y[i], lines.y[i+1]) &&
-                Inbetween(p[0], lines.x[i], lines.x[i+1]) {
-                point_index = index
+		for index, p := range points {
+			if Inbetween(p[1], lines.y[i], lines.y[i+1]) &&
+				Inbetween(p[0], lines.x[i], lines.x[i+1]) {
+				point_index = index
 				break
 			}
 		}
 		if point_index == -1 {
 			step += ManhattanDistance(lines.x[i], lines.y[i], lines.x[i+1], lines.y[i+1])
 		} else {
-			step +=  ManhattanDistance(lines.x[i], lines.y[i], points[point_index][0], points[point_index][1])
-            steps[point_index] = step
-            step +=  ManhattanDistance(points[point_index][0], points[point_index][1], lines.x[i+1], lines.y[i+1]) 
+			step += ManhattanDistance(lines.x[i], lines.y[i], points[point_index][0], points[point_index][1])
+			steps[point_index] = step
+			step += ManhattanDistance(points[point_index][0], points[point_index][1], lines.x[i+1], lines.y[i+1])
 		}
 	}
-    return steps
+	return steps
 }
 
 func part2(strings [2]string) {
-    fmt.Println("PART 2:")
+	fmt.Println("PART 2:")
 	points := GetPoints(strings)
 	lines := [2]Lines{}
 	for index, s := range strings {
 		lines[index] = InitLines(s)
 	}
-    steps_line1 := StepsToPoints(&lines[0], points)
-    steps_line2 := StepsToPoints(&lines[1], points)
-    steps := []int{}
-    for i := 0; i < len(points); i++ {
-        if !(steps_line1[i] == 0 || steps_line2[i] == 0) {
-            steps = append(steps, steps_line1[i] + steps_line2[i])
-        }
-    }
-    min, index := min(steps)
-    fmt.Printf("Min amount of steps: %d\nTo point: %v\n\n", min, points[index])
+	steps_line1 := StepsToPoints(&lines[0], points)
+	steps_line2 := StepsToPoints(&lines[1], points)
+	steps := []int{}
+	for i := 0; i < len(points); i++ {
+		if !(steps_line1[i] == 0 || steps_line2[i] == 0) {
+			steps = append(steps, steps_line1[i]+steps_line2[i])
+		}
+	}
+	min, index := min(steps)
+	fmt.Printf("Min amount of steps: %d\nTo point: %v\n\n", min, points[index])
 }
 
 func min(l []int) (int, int) {
-    min_index := 0
-    min := l[min_index]
-    for index, el := range l[1:] {
-        if min >= el {
-            min = el
-            min_index = index + 1 // +1 because it starts at the second element
-        }
-    }
-    return min, min_index
+	min_index := 0
+	min := l[min_index]
+	for index, el := range l[1:] {
+		if min >= el {
+			min = el
+			min_index = index + 1 // +1 because it starts at the second element
+		}
+	}
+	return min, min_index
 }
 func main() {
 	file, err := os.Open("inputs/3.txt")
@@ -209,7 +210,8 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	for i := 0; scanner.Scan() && i < 2; i++ {
 		strings[i] = scanner.Text()
+        fmt.Println(i)
 	}
 	part1(strings)
-    part2(strings)
+	part2(strings)
 }
