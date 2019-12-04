@@ -3,8 +3,6 @@ package main
 import (
 	"fmt"
 	"math"
-	//"os"
-	//"strconv"
 )
 
 type Pw struct {
@@ -58,29 +56,25 @@ func PwToInt(pw *Pw) int {
 	return int(res)
 }
 
-func IsCorrect(n []int) bool {
-	if len(n) != 3 {
-		return false
-	}
-	if n[0] <= n[1] {
-		return true
-	}
-	return false
-}
-
 func findCorrectPw(pw *Pw, max int) (correct bool, max_reached bool) {
 	equals := 0
 	prev := pw.numbers[0]
 	for i := 1; i < len(pw.numbers); i++ {
-		for prev > pw.numbers[i] {
-			Increment(pw)
-		}
+		//for prev > pw.numbers[i] {
+        //   Increment(pw) // this iterates over everything and is not necessary
+		//}
+        if prev > pw.numbers[i] {
+            for j:= i; j < len(pw.numbers); j++ { 
+                pw.numbers[j] = prev
+            }
+            return true, PwToInt(pw) >= max
+        } 
 		if prev == pw.numbers[i] {
 			equals++
 		}
 		prev = pw.numbers[i]
 	}
-    correct = equals != 2
+    correct = equals != 0
 	max_reached = PwToInt(pw) >= max
     return correct, max_reached
 }
@@ -103,7 +97,7 @@ func main() {
 	Increment(&pw)
 	var amt int
     // for part one
-    // s/_/correct/
+    // s/_/correct/ and hasDoubles -> correct
     _, max_reached := findCorrectPw(&pw, 643603)
 	for !max_reached {
 		if  hasDoubles(&pw) {
