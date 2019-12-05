@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+    "time"
 )
 
 type Pw struct {
@@ -93,18 +94,20 @@ func hasDoubles(pw *Pw) bool {
 }
 
 func main() {
-	pw := IntToPw(171309)
+    start := time.Now()
+	pw := IntToPw(1713090000000000000)
 	Increment(&pw)
 	var amt int
     // for part one
     // s/_/correct/ and hasDoubles -> correct
-    _, max_reached := findCorrectPw(&pw, 643603)
+    correct, max_reached := findCorrectPw(&pw, 6436030000000000000)
 	for !max_reached {
-		if  hasDoubles(&pw) {
+		if  correct /*hasDoubles(&pw)*/ {
 			amt++
 		}
         Increment(&pw)
-        _, max_reached = findCorrectPw(&pw, 643603)
+        correct, max_reached = findCorrectPw(&pw, 6436030000000000000)
 	}
-	fmt.Printf("Amt: %d\n", amt)
+    t := time.Now()
+	fmt.Printf("Amt: %d\nTime:%v\n", amt, t.Sub(start))
 }

@@ -9,6 +9,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+    "time"
 )
 
 var test_input = [][2]string{
@@ -210,8 +211,10 @@ func main() {
 	scanner := bufio.NewScanner(file)
 	for i := 0; scanner.Scan() && i < 2; i++ {
 		strings[i] = scanner.Text()
-        fmt.Println(i)
 	}
+    start := time.Now()
 	part1(strings)
 	part2(strings)
+    t := time.Now()
+    fmt.Printf("Time: %v\n", t.Sub(start))
 }
